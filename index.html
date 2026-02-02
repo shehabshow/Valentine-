@@ -71,8 +71,6 @@
 
     button {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       padding: 16px 24px;
       font-size: 18px;
       font-weight: 800;
@@ -82,12 +80,12 @@
       box-shadow: 0 10px 24px rgba(0,0,0,.14);
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      /* حركة سلسة للزر */
-      transition: transform .5s cubic-bezier(0.25, 1, 0.5, 1), background .12s ease;
     }
 
     #yesBtn {
       left: 18%;
+      top: 50%;
+      transform: translateY(-50%);
       background: var(--yes);
       color: #fff;
     }
@@ -95,8 +93,12 @@
 
     #noBtn {
       left: 62%;
+      top: 50%;
       background: #e5e7eb;
       color: #111827;
+      transition: left .45s cubic-bezier(.25,1,.5,1),
+                  top .45s cubic-bezier(.25,1,.5,1),
+                  background .12s ease;
     }
 
     .hint {
@@ -233,22 +235,19 @@
       fullScreenConfetti();
     });
 
-    // حركة سلسة للزر No
+    /* حركة سلسة لزر No */
     noBtn.addEventListener("mouseenter", () => {
       const zoneRect = zone.getBoundingClientRect();
-      const btnWidth = noBtn.offsetWidth;
-      const btnHeight = noBtn.offsetHeight;
+      const btnRect = noBtn.getBoundingClientRect();
 
-      const maxX = zoneRect.width - btnWidth;
-      const maxY = zoneRect.height - btnHeight;
+      const maxX = zoneRect.width - btnRect.width;
+      const maxY = zoneRect.height - btnRect.height;
 
-      let randomX, randomY;
-      do {
-        randomX = Math.random() * maxX;
-        randomY = Math.random() * maxY;
-      } while (Math.abs(randomX - noBtn.offsetLeft) < 30 && Math.abs(randomY - noBtn.offsetTop) < 30);
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
 
-      noBtn.style.transform = `translate(${randomX}px, ${randomY}px) translateY(-50%)`;
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
     });
   </script>
 </body>
