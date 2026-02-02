@@ -82,7 +82,8 @@
       box-shadow: 0 10px 24px rgba(0,0,0,.14);
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      transition: transform .3s ease, background .12s ease;
+      /* حركة سلسة للزر */
+      transition: transform .5s cubic-bezier(0.25, 1, 0.5, 1), background .12s ease;
     }
 
     #yesBtn {
@@ -232,7 +233,7 @@
       fullScreenConfetti();
     });
 
-    // زر No يهرب عند الاقتراب
+    // حركة سلسة للزر No
     noBtn.addEventListener("mouseenter", () => {
       const zoneRect = zone.getBoundingClientRect();
       const btnWidth = noBtn.offsetWidth;
@@ -241,8 +242,11 @@
       const maxX = zoneRect.width - btnWidth;
       const maxY = zoneRect.height - btnHeight;
 
-      const randomX = Math.random() * maxX;
-      const randomY = Math.random() * maxY;
+      let randomX, randomY;
+      do {
+        randomX = Math.random() * maxX;
+        randomY = Math.random() * maxY;
+      } while (Math.abs(randomX - noBtn.offsetLeft) < 30 && Math.abs(randomY - noBtn.offsetTop) < 30);
 
       noBtn.style.transform = `translate(${randomX}px, ${randomY}px) translateY(-50%)`;
     });
