@@ -97,8 +97,7 @@
       background: #e5e7eb;
       color: #111827;
       transition: left .45s cubic-bezier(.25,1,.5,1),
-                  top .45s cubic-bezier(.25,1,.5,1),
-                  background .12s ease;
+                  top .45s cubic-bezier(.25,1,.5,1);
     }
 
     .hint {
@@ -187,11 +186,9 @@
     <section class="result" id="result">
       <h2>YAY! 🎉</h2>
       <p>I knew it 😏💖</p>
-      <img
-        class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-        alt="Fireworks"
-      />
+      <img class="fireworks"
+           src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+           alt="Fireworks">
     </section>
   </main>
 
@@ -207,8 +204,6 @@
       const dpr = Math.max(1, window.devicePixelRatio || 1);
       confettiCanvas.width = window.innerWidth * dpr;
       confettiCanvas.height = window.innerHeight * dpr;
-      confettiCanvas.style.width = "100vw";
-      confettiCanvas.style.height = "100vh";
     }
 
     resizeConfettiCanvas();
@@ -235,8 +230,8 @@
       fullScreenConfetti();
     });
 
-    /* حركة سلسة لزر No */
-    noBtn.addEventListener("mouseenter", () => {
+    /* 💥 حركة زر No (ماوس + تاتش) */
+    function moveNoButton() {
       const zoneRect = zone.getBoundingClientRect();
       const btnRect = noBtn.getBoundingClientRect();
 
@@ -248,7 +243,16 @@
 
       noBtn.style.left = `${randomX}px`;
       noBtn.style.top = `${randomY}px`;
-    });
+    }
+
+    // كمبيوتر
+    noBtn.addEventListener("mouseenter", moveNoButton);
+
+    // موبايل 📱
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    }, { passive: false });
   </script>
 </body>
 </html>
